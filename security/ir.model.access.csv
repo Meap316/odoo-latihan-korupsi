@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_persenan_plus_keyholder,persenan_plus.keyholder,model_persenan_plus_keyholder,base.group_user,1,1,1,1
+access_persenan_plus_keyholder_position,persenan_plus.keyholder_position,model_persenan_plus_keyholder_position,base.group_user,1,1,1,1

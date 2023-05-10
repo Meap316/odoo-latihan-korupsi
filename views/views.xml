@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="persenan_plus.list">
+      <field name="name">persenan_plus list</field>
+      <field name="model">persenan_plus.persenan_plus</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="persenan_plus.action_window">
+      <field name="name">persenan_plus window</field>
+      <field name="res_model">persenan_plus.persenan_plus</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="persenan_plus.action_server">
+      <field name="name">persenan_plus server</field>
+      <field name="model_id" ref="model_persenan_plus_persenan_plus"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="persenan_plus" id="persenan_plus.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="persenan_plus.menu_1" parent="persenan_plus.menu_root"/>
+    <menuitem name="Menu 2" id="persenan_plus.menu_2" parent="persenan_plus.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="persenan_plus.menu_1_list" parent="persenan_plus.menu_1"
+              action="persenan_plus.action_window"/>
+    <menuitem name="Server to list" id="persenan_plus" parent="persenan_plus.menu_2"
+              action="persenan_plus.action_server"/>
+-->
+  </data>
+</odoo>
