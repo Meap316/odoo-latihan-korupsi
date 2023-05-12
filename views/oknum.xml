@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+    
+    <record id="oknum_view_tree" model="ir.ui.view">
+      <field name="name">oknum.view.tree</field>
+      <field name="model">persenan_plus.oknum</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="name" />
+          <field name="jabatan" />
+          <field name="domisili" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="oknum_view_form" model="ir.ui.view">
+      <field name="name">oknum.view.form</field>
+      <field name="model">persenan_plus.oknum</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+                  
+              <field name="name" />
+              <field name="jabatan" />
+              <field name="domisili" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="oknum_action" model="ir.actions.act_window">
+      <field name="name">oknum</field>
+      <field name="res_model">persenan_plus.oknum</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+  </data>
+</odoo>

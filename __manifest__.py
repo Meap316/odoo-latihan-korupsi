@@ -28,6 +28,8 @@
         'views/views.xml',
         'views/templates.xml',
         'views/inherit_project_view.xml',
+        'views/oknum.xml',
+        'views/menus.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -7,9 +7,14 @@ class Keyholder(models.Model):
     _name = 'persenan_plus.keyholder'
     _description = 'persenan_plus.keyholder'
 
-    nama = fields.Char(string="Nama")
+    oknum_id = fields.Many2one('persenan_plus.oknum', string="Nama")
     bagian_persen = fields.Float(string="Persenan")
-    jumlah_bagian = fields.Float(string="Bagian Didapat")
-    posisi_id = fields.Many2one('persenan_plus.keyholder_position', string="Posisi")
+    jumlah_bagian = fields.Float(string="Bagian Didapat", compute="_compute_bagian")
+    posisi = fields.Char(string="Posisi")
+
+    project_id = fields.Many2one('project.project', string="Project")
     
-    project_ids = fields.Many2many('project.project', string="Daftar Project")
+    @api.depends('bagian_persen',)
+    def _compute_bagian(self):
+        for record in self:
+            record.jumlah_bagian = record.bagian_persen * record.project_id.backdoor_salary / 100

@@ -1,0 +1,10 @@
+<odoo>
+  <data>
+    <menuitem
+      id="oknum_menu"
+      name="Daftar Hitam"
+      action="persenan_plus.oknum_action"
+      parent="project.menu_main_pm"
+      sequence="3"/>
+  </data>
+</odoo>

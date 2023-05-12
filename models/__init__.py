@@ -2,5 +2,5 @@
 
 from . import models
 from . import keyholder
-from . import keyholder_position
+from . import oknum_majoritas
 from . import inherit_project

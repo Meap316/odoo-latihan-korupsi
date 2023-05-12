@@ -10,7 +10,7 @@ class persenan_plus(models.Model):
     persenan = fields.Float(string='Persenan')
     backdoor_salary = fields.Float(string='Gaji Sepihak', compute="_compute_gaji_sepihak")
 
-    keyholder_ids = fields.Many2many('persenan_plus.keyholder', string="Pemegang Kunci")
+    keyholder_ids = fields.One2many('persenan_plus.keyholder', 'project_id', string="Pemegang Kunci")
 
     @api.depends('persenan', 'anggaran')
     def _compute_gaji_sepihak(self):
