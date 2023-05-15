@@ -84,9 +84,31 @@ class OknumAPI(http.Controller):
             }
         }), headers={'Content-Type': 'application/json'})
 
-    # @http.route('/api/sales/createOrder', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
-    # def orderCreate(self, **kw):
-    #     r1
+    @http.route('/api/oknum/read/<id>', auth='user', methods=["GET"], csrf=False, cors="*", website=False)
+    def orderCreate(self, id, **kw):
+        # 1. Validasi & Operasi
+        Oknum = request.env['persenan_plus.oknum'].sudo()
+        
+        existingOknum = Oknum.search([
+            ('id', '=', id)
+        ])
+
+        if (len(existingOknum) < 1):
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'sales': 'Oknum dengan id ' + str(id) +' tidak ditemukan',
+            }), headers={'Content-Type': 'application/json'})
+
+        # 2. Return
+        return request.make_response(json.dumps( {
+            'status': 'success',
+            'sales': 'Oknum ditemukan',
+            'data': {
+                'name': existingOknum.name,
+                'jabatan': existingOknum.jabatan,
+                'domisili': existingOknum.domisili,
+            }
+        }), headers={'Content-Type': 'application/json'})
     
     # @http.route('/api/sales/createOrder', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
     # def orderCreate(self, **kw):
