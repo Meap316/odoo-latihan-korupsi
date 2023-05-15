@@ -65,7 +65,7 @@ class OknumAPI(http.Controller):
             }), headers={'Content-Type': 'application/json'})
 
         # 2. Operasional
-        Oknum = request.env['persenan.plus'].sudo()
+        Oknum = request.env['persenan_plus.oknum'].sudo()
 
         newOknum = Oknum.create({
             'name':name,
