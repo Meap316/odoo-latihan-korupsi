@@ -38,7 +38,7 @@ class OknumAPI(http.Controller):
        return request.make_response(json.dumps(res), headers={'Content-Type': 'application/json'})
 
     @http.route('/api/oknum/create', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
-    def orderCreate(self, **kw):
+    def oknumCreate(self, **kw):
         # 1. Validasi
         try:
             name = kw["name"]
@@ -85,7 +85,7 @@ class OknumAPI(http.Controller):
         }), headers={'Content-Type': 'application/json'})
 
     @http.route('/api/oknum/read/<id>', auth='user', methods=["GET"], csrf=False, cors="*", website=False)
-    def orderCreate(self, id, **kw):
+    def oknumGetById(self, id, **kw):
         # 1. Validasi & Operasi
         Oknum = request.env['persenan_plus.oknum'].sudo()
         
@@ -110,9 +110,88 @@ class OknumAPI(http.Controller):
             }
         }), headers={'Content-Type': 'application/json'})
     
-    # @http.route('/api/sales/createOrder', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
-    # def orderCreate(self, **kw):
-    #     r2
+    @http.route('/api/oknum/read/filter', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
+    def oknumGetByFilter(self, **kw):
+        try:
+            page = kw["page"]
+        except KeyError:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`page` is required.'
+            }), headers={'Content-Type': 'application/json'})
+
+        try:
+            limit = kw["limit"]
+        except KeyError:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`limit` is required.'
+            }), headers={'Content-Type': 'application/json'})
+
+        filters = []
+        sorts = []
+        isValid = True
+        if 'filter' in kw:
+            filters = json.loads(kw["filter"])
+
+            for filter in filters:
+                if "field" not in filter:
+                    isValid = False
+                if "operator" not in filter:
+                    isValid = False
+                if "value" not in filter:
+                    isValid = False
+        
+        if not isValid:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`filter` is not valid.'
+            }), headers={'Content-Type': 'application/json'})
+        
+        if 'sort' in kw:
+            sorts = json.loads(kw["sort"])
+
+            for sort in sorts:
+                if "field" not in sort:
+                    isValid = False
+                if "type" not in sort:
+                    isValid = False
+        
+        if not isValid:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`sort` is not valid.'
+            }), headers={'Content-Type': 'application/json'})
+
+        # 2. Operasional
+        filterObj = []
+        sortString = ''
+
+        for filter in filters:
+            filterObj.append((filter['field'], filter['operator'], filter['value']))
+
+        for sort in sorts:
+            sortString += sort['field']+ ' '+sort['type'] if sort != '' else ', '+sort['field']+ ' '+sort['type']
+        
+        Oknum = request.env['persenan_plus.oknum'].sudo()
+
+        offset = (int(page)-1)*int(limit)
+        listOknum = Oknum.search(filterObj, order=sortString, offset=offset, limit=int(limit))
+        
+        result = []
+
+        for oknum in listOknum:
+            result.append({
+                'name': oknum.name,
+                'jabatan': oknum.jabatan,
+                'domisili': oknum.domisili,
+            })
+        # 3. Return response 
+        return request.make_response(json.dumps( {
+            'status': 'success',
+            'sales': 'Berhasil membuat oknum',
+            'data': result
+        }), headers={'Content-Type': 'application/json'})
     
     # @http.route('/api/sales/createOrder', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
     # def orderCreate(self, **kw):
