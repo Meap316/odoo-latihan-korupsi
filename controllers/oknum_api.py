@@ -193,10 +193,85 @@ class OknumAPI(http.Controller):
             'data': result
         }), headers={'Content-Type': 'application/json'})
     
-    # @http.route('/api/sales/createOrder', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
-    # def orderCreate(self, **kw):
-    #     u
+    @http.route('/api/oknum/update', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
+    def oknumUpdate(self, **kw):
+        try:
+            id = kw["id"]
+        except KeyError:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`id` is required.'
+            }), headers={'Content-Type': 'application/json'})
+        
+        try:
+            name = kw["name"]
+        except KeyError:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`name` is required.'
+            }), headers={'Content-Type': 'application/json'})
 
-    # @http.route('/api/sales/createOrder', auth='user', methods=["POST"], csrf=False, cors="*", website=False)
-    # def orderCreate(self, **kw):
-    #     d
+        try:
+            jabatan = kw["jabatan"]
+        except KeyError:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`jabatan` is required.'
+            }), headers={'Content-Type': 'application/json'})
+
+        try:
+            domisili = kw["domisili"]
+        except KeyError:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': '`domisili` is required.'
+            }), headers={'Content-Type': 'application/json'})
+        
+        Oknum = request.env['persenan_plus.oknum'].sudo()
+
+        existingOknum = Oknum.search([('id', '=', id)])
+
+        if len(existingOknum) < 1:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': 'Oknum dengan id '+ str(id)+' tidak ditemukan'
+            }), headers={'Content-Type': 'application/json'})
+
+        existingOknum = existingOknum[0]
+        existingOknum.write({
+            'name':name,
+            'jabatan':jabatan,
+            'domisili':domisili,
+        })
+
+        # 3. Return response 
+        return request.make_response(json.dumps( {
+            'status': 'success',
+            'sales': 'Berhasil mengupdate oknum',
+            'data': {
+                'name': existingOknum.name,
+                'jabatan': existingOknum.jabatan,
+                'domisili': existingOknum.domisili,
+            }
+        }), headers={'Content-Type': 'application/json'})
+
+    @http.route('/api/oknum/delete/<id>', auth='user', methods=["GET"], csrf=False, cors="*", website=False)
+    def oknumDelete(self, id, **kw):
+        Oknum = request.env['persenan_plus.oknum'].sudo()
+
+        existingOknum = Oknum.search([('id', '=', id)])
+
+        if len(existingOknum) < 1:
+            return request.make_response(json.dumps( {
+                'status': 'failed',
+                'message': 'Oknum dengan id '+ str(id)+' tidak ditemukan'
+            }), headers={'Content-Type': 'application/json'})
+
+        existingOknum = existingOknum[0]
+        existingOknum.unlink()
+
+        # 3. Return response 
+        return request.make_response(json.dumps( {
+            'status': 'success',
+            'sales': 'Berhasil menghapus oknum dengan id '+str(id),
+        }), headers={'Content-Type': 'application/json'})
