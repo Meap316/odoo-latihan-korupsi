@@ -30,6 +30,8 @@
         'views/inherit_project_view.xml',
         'views/oknum.xml',
         'views/menus.xml',
+        'report/penerimaan.xml',
+        'report/jumlah_project.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

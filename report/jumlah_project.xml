@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <template id="laporan_jumlah_project">
+            <t t-foreach="docs" t-as="project">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>
+                                <span t-field="project.name"/>
+                            </h2>
+                            <h4>Tabel Keyholder</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Jumlah Project Diikuti</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="kayholders" t-value="project.mapped('keyholder_ids')"/>
+                                    <tr t-foreach="kayholders" t-as="keyholder">
+                                        <td>
+                                            <span t-field="keyholder.oknum_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="jumlahproject[str(keyholder.oknum_id.id)]"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="report_laporan_jumlah_project" model="ir.actions.report">
+            <field name="name">Laporan Jumlah Project</field>
+            <field name="model">project.project</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">persenan_plus.laporan_jumlah_project</field>
+            <field name="report_file">persenan_plus.laporan_jumlah_project</field>
+            <field name="print_report_name">'Laporan Jumlah Project'</field>
+            <field name="binding_model_id" ref="model_project_project"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

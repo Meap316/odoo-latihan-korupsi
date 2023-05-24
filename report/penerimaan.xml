@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <template id="laporan_penerimaan">
+            <t t-foreach="docs" t-as="project">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>
+                                <span t-field="project.name"/>
+                            </h2>
+                            <div>
+                                <strong>Anggaran: </strong>
+                                <span t-field="project.anggaran"/>
+                            </div>
+                            <div>
+                                <strong>Total Dapet: </strong>
+                                <span t-field="project.backdoor_salary"/>
+                            </div>
+                            <h4>Tabel Pembagian</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Persen</th>
+                                        <th>Jumlah Dapat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="kayholders" t-value="project.mapped('keyholder_ids')"/>
+                                    <tr t-foreach="kayholders" t-as="keyholder">
+                                        <td>
+                                            <span t-field="keyholder.oknum_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="keyholder.bagian_persen"/>%
+                                        </td>
+                                        <td>
+                                            <span t-field="keyholder.jumlah_bagian"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="report_laporan_penerimaan" model="ir.actions.report">
+            <field name="name">Laporan Penerimaan</field>
+            <field name="model">project.project</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">persenan_plus.laporan_penerimaan</field>
+            <field name="report_file">persenan_plus.laporan_penerimaan</field>
+            <field name="print_report_name">'Laporan Penerimaan'</field>
+            <field name="binding_model_id" ref="model_project_project"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
