@@ -10,3 +10,6 @@ class OknumMajoritas(models.Model):
     name = fields.Char(string="Nama")
     jabatan = fields.Char(string="Jabatan")
     domisili = fields.Char(string="Domain/Domisili")
+    
+    def boop(self):
+        self.name += ' Boop' 

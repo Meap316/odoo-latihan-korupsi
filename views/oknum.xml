@@ -6,6 +6,10 @@
       <field name="model">persenan_plus.oknum</field>
       <field name="arch" type="xml">
         <tree string="">
+          <header>
+  
+            <button string="BOOP" name="boop" type="object" class="oe_highlight"/>
+          </header>
           <field name="name" />
           <field name="jabatan" />
           <field name="domisili" />

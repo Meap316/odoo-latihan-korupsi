@@ -30,9 +30,11 @@
         'views/inherit_project_view.xml',
         'views/oknum.xml',
         'views/menus.xml',
+        'views/assets.xml',
         'report/penerimaan.xml',
-        'report/jumlah_project.xml'
+        'report/jumlah_project.xml',
     ],
+    "qweb": ['static/src/xml/*.xml'],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
